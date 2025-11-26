@@ -55,6 +55,19 @@
                     @enderror
                 </div>
 
+                <div class="mb-3 text-start">
+                    <label for="role" class="form-label">Role</label>
+                    <select name="role" id="role" 
+                            class="form-control @error('role') is-invalid @enderror" required>
+                        <option value="">-- Pilih Role --</option>
+                        <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
+                        <option value="anggota" {{ old('role') == 'anggota' ? 'selected' : '' }}>Anggota</option>
+                    </select>
+                    @error('role')
+                        <div class="text-danger small">{{ $message }}</div>
+                    @enderror
+                </div>
+                
                 <button type="submit" class="btn btn-primary w-100 mt-3">Register</button>
 
                 <p class="mt-4 text-muted">

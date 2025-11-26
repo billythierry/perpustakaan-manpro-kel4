@@ -27,7 +27,9 @@ class LoginController extends Controller
             if($user->role === 'admin')
             {
                 return redirect()->route('admin.dashboard');
-            }else if($user->role === 'anggota')
+            }
+
+            if($user->role === 'anggota')
             {
                 return redirect()->route('member.dashboard');
             }
@@ -37,6 +39,7 @@ class LoginController extends Controller
 
         return back()->withErrors([
             'username' => 'Username atau password salah.',
+            'password' => 'Username atau password salah.'
         ]);
     }
 

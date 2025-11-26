@@ -15,8 +15,8 @@
             <p class="text-muted mb-4">Silakan pilih salah satu untuk mulai menggunakan aplikasi</p>
 
             <div class="d-grid gap-3">
-                <a href="{{ route('login') }}" class="btn btn-primary btn-lg">Login</a>
-                <a href="{{ route('register') }}" class="btn btn-outline-secondary btn-lg">Register</a>
+                <a href="{{ route('login') }}" class="btn btn-primary btn-lg">Masuk</a>
+                <a href="{{ route('register') }}" class="btn btn-outline-secondary btn-lg">Daftar</a>
             </div>
         </div>
     </div>

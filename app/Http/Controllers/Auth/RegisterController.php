@@ -16,13 +16,14 @@ class RegisterController extends Controller
     {
         $validated = $request->validate([
             'username' => 'required|string|unique:user,username',
-            'password' => 'required|string|min:6|confirmed'
+            'password' => 'required|string|min:6|confirmed',
+            'role' => 'required|in:admin,anggota'
         ]);
 
         User::create([
             'username' => $validated['username'],
             'password_hash' => $validated['password'],
-            'role' => 'admin', // Sementara dulu
+            'role' => $validated['role'] // Sementara dulu
         ]);
 
         return redirect()->route('login')->with('success', 'Registrasi berhasil, silakan login.');
