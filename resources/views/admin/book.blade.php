@@ -120,128 +120,124 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Inisialisasi Modal Bootstrap 5
-    const modal = new bootstrap.Modal(document.getElementById('bookModal'));
+
+    const modalElement = document.getElementById('bookModal');
+    const modal = new bootstrap.Modal(modalElement);
     const form = document.getElementById('bookForm');
-    const modalTitle = document.getElementById('modalTitle');
-    const currentImageNote = document.getElementById('current-image-note');
-    
-    // Fungsi Reset Form & Errors
+
+    // Reset form
     function resetForm() {
         form.reset();
         document.getElementById('book_id').value = '';
-        document.querySelectorAll('.text-danger.small').forEach(el => el.textContent = '');
-        modalTitle.textContent = 'Tambah Buku';
-        currentImageNote.textContent = 'Hanya isi jika ingin mengganti gambar.';
-    }
-    
-    // Fungsi Display Errors
-    function displayErrors(errors) {
-        document.querySelectorAll('.text-danger.small').forEach(el => el.textContent = '');
-        for (const [key, value] of Object.entries(errors)) {
-            const errorElement = document.getElementById(`error-${key}`);
-            if (errorElement) {
-                errorElement.textContent = value[0];
-            }
-        }
+        document.querySelectorAll('.text-danger.small').forEach(e => e.textContent = '');
+        document.getElementById('modalTitle').textContent = 'Tambah Buku';
+        document.getElementById('current-image-note').textContent = 'Hanya isi jika ingin mengganti gambar.';
     }
 
-    // Tombol tambah
-    document.getElementById('btnAdd').onclick = function() {
+    // Tampilkan error validasi
+    function showErrors(errors) {
+        document.querySelectorAll('.text-danger.small').forEach(e => e.textContent = '');
+        Object.keys(errors).forEach(key => {
+            const element = document.getElementById(`error-${key}`);
+            if (element) {
+                element.textContent = errors[key][0];
+            }
+        });
+    }
+
+    // Tombol Tambah Buku
+    document.getElementById('btnAdd').onclick = function () {
         resetForm();
         modal.show();
     };
-    
-    // Tombol Batal
+
+    // Tombol Close
     document.getElementById('btnCancel').onclick = () => modal.hide();
     document.getElementById('btnCancelFooter').onclick = () => modal.hide();
 
-    // Tombol edit
+    // Tombol Edit Buku
     document.querySelectorAll('.btnEdit').forEach(btn => {
-        btn.onclick = function() {
-            const row = btn.closest('tr');
-            const id = row.dataset.id;
-            
-            fetch(`/admin/book/${id}/show`) 
-                .then(res => res.json())
-                .then(data => {
-                    document.getElementById('book_id').value = data.book_id;
-                    document.getElementById('title').value = data.title;
-                    document.getElementById('author').value = data.author;
-                    document.getElementById('publisher').value = data.publisher;
-                    document.getElementById('year').value = data.year;
-                    document.getElementById('stock').value = data.stock;
-                    
-                    // Update Note Gambar saat Edit
-                    if (data.image) {
-                        currentImageNote.innerHTML = `Saat ini: <a href="{{ asset('') }}${data.image}" target="_blank">Lihat Gambar</a>. Kosongkan field di atas jika tidak ingin mengganti.`;
-                    } else {
-                        currentImageNote.textContent = 'Belum ada gambar saat ini.';
-                    }
+        btn.onclick = function () {
+            const id = btn.closest('tr').dataset.id;
 
-                    modalTitle.textContent = 'Edit Buku';
-                    modal.show();
-                });
+            fetch(`/admin/book/${id}`)
+            .then(res => res.json())
+            .then(data => {
+
+                document.getElementById('book_id').value = data.book_id;
+                document.getElementById('title').value = data.title;
+                document.getElementById('author').value = data.author;
+                document.getElementById('publisher').value = data.publisher;
+                document.getElementById('year').value = data.year;
+                document.getElementById('stock').value = data.stock;
+
+                if (data.image) {
+                    document.getElementById('current-image-note').innerHTML =
+                        `Saat ini: <a href="{{ asset('') }}${data.image}" target="_blank">Lihat Gambar</a>. Kosongkan field ini jika tidak ingin mengganti.`;
+                }
+
+                document.getElementById('modalTitle').textContent = 'Edit Buku';
+                modal.show();
+            });
         };
     });
 
-    // Tombol delete
+    // Tombol Delete Buku
     document.querySelectorAll('.btnDelete').forEach(btn => {
-        btn.onclick = function() {
-            const row = btn.closest('tr');
-            const id = row.dataset.id;
-            if (confirm('Apakah Anda yakin ingin menghapus buku ini?')) {
-                fetch(`/admin/book/${id}`, {
-                    method: 'DELETE',
-                    headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' }
-                }).then(response => {
-                    if (response.ok) {
-                        // Jika sukses, reload halaman untuk menampilkan notifikasi success dari controller
-                        location.reload(); 
-                    } else {
-                        alert('Gagal menghapus data.');
-                    }
-                });
-            }
+        btn.onclick = function () {
+            const id = btn.closest('tr').dataset.id;
+
+            if (!confirm('Yakin ingin menghapus buku ini?')) return;
+
+            fetch(`/admin/book/${id}`, {
+                method: 'DELETE',
+                headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' }
+            })
+            .then(res => {
+                if (res.ok) location.reload();
+                else alert("Gagal menghapus data");
+            });
         };
     });
 
-    // Simpan (create/update)
-    form.onsubmit = function(e) {
+    // Submit (Tambah / Edit)
+    form.onsubmit = function (e) {
         e.preventDefault();
+
         const id = document.getElementById('book_id').value;
         const url = id ? `/admin/book/${id}` : `/admin/book`;
-        
-        // Wajib menggunakan FormData untuk mengirim file
+
         const formData = new FormData(form);
-        
-        // Tambahkan spoofing method untuk PUT/PATCH, wajib jika ada file upload
-        if (id) {
-            formData.append('_method', 'PUT');
-        }
+        if (id) formData.append('_method', 'PUT'); // spoofing method
 
         fetch(url, {
-            method: 'POST', // Selalu POST saat mengirim FormData, lalu Laravel akan membaca _method=PUT
+            method: 'POST',
             body: formData,
-            headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            headers: { "X-CSRF-TOKEN": "{{ csrf_token() }}" }
+        })
+        .then(async res => {
+
+            // Jika validasi Laravel gagal → kode 422
+            if (res.status === 422) {
+                const data = await res.json();
+                showErrors(data.errors);
+                return;
             }
-        }).then(response => response.json())
-          .then(data => {
-            if (data.errors) {
-                // Tampilkan error validasi
-                displayErrors(data.errors);
-            } else {
+
+            // Jika sukses → reload & tampilkan pesan sukses
+            if (res.ok) {
                 modal.hide();
-                // Reload halaman untuk melihat perubahan dan notifikasi sukses
-                location.reload(); 
+                location.reload();
             }
-          })
-          .catch(error => {
-            console.error('Error:', error);
-            alert('Terjadi kesalahan saat menyimpan data.');
-          });
+
+        })
+        .catch(err => {
+            console.error(err);
+            alert("Terjadi kesalahan");
+        });
     };
+
 });
 </script>
+
 @endsection

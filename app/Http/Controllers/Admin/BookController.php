@@ -39,6 +39,12 @@ class BookController extends Controller
         return response()->json(['success' => true, 'book' => $book]);
     }
 
+        public function show($id)
+    {
+        $book = Book::findOrFail($id);
+        return response()->json($book);
+    }
+
     //Update User
     public function update(Request $request, $id)
     {
@@ -78,8 +84,15 @@ class BookController extends Controller
     public function destroy($id)
     {
         $book = Book::findOrFail($id);
+
+        // Hapus file gambar jika ada
+        if ($book->image && file_exists(public_path($book->image))) {
+            unlink(public_path($book->image));
+        }
+
         $book->delete();
 
-        return redirect()->route('admin.book.index')->with('success', 'Book deleted successfully');
+        return response()->json(['success' => true]);
     }
+
 }

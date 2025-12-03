@@ -26,7 +26,7 @@ Route::prefix('Anggota')->middleware(['auth', 'membercheck'])->group(function()
 });
 
 //Admin
-Route::prefix('Admin')->middleware(['auth', 'admincheck'])->group(function()
+Route::prefix('admin')->middleware(['auth', 'admincheck'])->group(function()
 {
     Route::get('dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
     Route::resource('user', UserController::class)->names('admin.user');
