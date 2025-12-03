@@ -18,11 +18,15 @@ class RegisterController extends Controller
         $validated = $request->validate([
             'username' => 'required|string|unique:user,username',
             'password' => 'required|string|min:6|confirmed',
+            'email' => 'required|email|max:255',
+            'address' => 'required|string|max:255'
         ]);
 
         User::create([
             'username' => $validated['username'],
             'password_hash' => Hash::make($validated['password']),
+            'email' => $validated['email'],
+            'address' => $validated['address'],
             'role' => 'anggota', // default server-side
         ]);
 

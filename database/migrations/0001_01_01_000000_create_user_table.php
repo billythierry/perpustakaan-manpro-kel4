@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('user', function (Blueprint $table) {
             $table->id('user_id'); // Sama dengan int not null primary key auto_increment
             $table->string('username', 100)->unique();
+            $table->string('email', 255);
+            $table->string('address', 255);
             $table->string('password_hash', 255);
             
             // Menggantikan ENUM('admin', 'anggota')

@@ -16,11 +16,9 @@ return new class extends Migration
             $table->string('title', 255);
             $table->string('author', 255);
             $table->string('publisher', 255);
-            
-            // Tipe data YEAR
             $table->year('year'); 
-            
             $table->integer('stock');
+            $table->string('image');
         });
     }
 

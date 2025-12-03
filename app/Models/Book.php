@@ -18,7 +18,8 @@ class Book extends Model
         'author',
         'publisher',
         'year',
-        'stock'
+        'stock',
+        'image'
     ];
 
 }

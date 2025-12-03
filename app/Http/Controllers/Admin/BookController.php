@@ -13,31 +13,30 @@ class BookController extends Controller
         return view('admin.book', compact('book'));
     }
 
-    // public function create()
-    // {
-    //     return view('admin.user.create');
-    // }
-
     //Create User
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|string|max:100', //mungkin bisa diganti 255 max
-            'author' => 'required|string|max:100', //ini juga
-            'publisher' => 'required|string|max:100', //ini juga
+            'title' => 'required|string|max:255', //mungkin bisa diganti 255 max
+            'author' => 'required|string|max:255', //ini juga
+            'publisher' => 'required|string|max:255', //ini juga
             'year' => 'required|integer|digits:4',
-            'stock' => 'required|int'
+            'stock' => 'required|integer',
+            'image' => 'required|image|mimes:jpg,png,jpeg|max:2048'
         ]);
 
-        Book::create([
-            'title' => $request->title,
-            'author' => $request->author,
-            'publisher' => $request->publisher,
-            'year' => $request->year,
-            'stock' => $request->stock
-        ]);
+        $data = $request->only(['title', 'author', 'publisher', 'year', 'stock', 'image']);
 
-        return redirect()->route('admin.book.index')->with('success', 'Book created successfully');
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $filename = time().'_'.$file->getClientOriginalName();
+            $file->move(public_path('uploads/books'), $filename);
+            $data['image'] = 'uploads/books/' . $filename;
+        }
+
+        $book = Book::create($data);
+
+        return response()->json(['success' => true, 'book' => $book]);
     }
 
     //Update User
@@ -46,16 +45,33 @@ class BookController extends Controller
         $book = Book::findOrFail($id);
 
         $request->validate([
-            'title' => 'required|string|max:100', //mungkin bisa diganti 255 max, 
-            'author' => 'required|string|max:100', //ini juga
-            'publisher' => 'required|string|max:100', //ini juga
-            'year' => 'required|integer|digits:4',
-            'stock' => 'required|int'
+            'title' => 'sometimes|string|max:255',
+            'author' => 'sometimes|string|max:255',
+            'publisher' => 'sometimes|string|max:255',
+            'year' => 'sometimes|integer|digits:4',
+            'stock' => 'sometimes|integer',
+            'image' => 'nullable|image|mimes:jpg,png,jpeg|max:2048'
         ]);
 
-        $book->update($request->all());
+        $data = $request->only(['title', 'author', 'publisher', 'year', 'stock']);
 
-        return redirect()->route('admin.book.index')->with('success', 'Book updated successfully');
+        // Jika upload gambar baru
+        if ($request->hasFile('image')) {
+
+            // Hapus file lama jika ada
+            if ($book->image && file_exists(public_path($book->image))) {
+                unlink(public_path($book->image));
+            }
+
+            $file = $request->file('image');
+            $filename = time().'_'.$file->getClientOriginalName();
+            $file->move(public_path('uploads/books'), $filename);
+            $data['image'] = 'uploads/books/' . $filename;
+        }
+
+        $book->update($data);
+
+        return response()->json(['success' => true]);
     }
 
     //Delete User

@@ -18,7 +18,9 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'username' => 'required|string|max:100',
+            'username' => 'required|string|unique:user,username|max:100',
+            'email' => 'required|email|max:255',
+            'address' => 'required|string|max:255',
             'password_hash' => 'required|string|max:255',
             'role' => 'required|in:admin,anggota'
         ]);
@@ -47,6 +49,8 @@ class UserController extends Controller
                 // Cek unik ke tabel 'user' kolom 'username', tapi abaikan ID user ini sendiri
                 Rule::unique('user', 'username')->ignore($user->user_id, 'user_id') 
             ],
+            'email' => 'sometimes|email|max:255',
+            'address' => 'sometimes|string|max:255',
             'password_hash' => 'sometimes|string|max:255',
             'role'          => 'sometimes|in:admin,anggota'
         ]);
