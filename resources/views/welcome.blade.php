@@ -53,7 +53,7 @@
                     <p class="hero-subtitle">Perpustakaan digital modern yang menghubungkan Anda dengan ribuan koleksi buku berkualitas. Baca, pinjam, dan tingkatkan wawasan Anda kapan saja, di mana saja.</p>
                     <div class="d-flex gap-3 flex-wrap">
                         <a href="{{ route('register') }}" class="btn btn-light btn-hero">
-                            <i class="fas fa-user-plus me-2"></i>Daftar Sekarang
+                            <i class="fas fa-user-plus me-2"></i>Daftar Anggota
                         </a>
                         <a href="#tentang" class="btn btn-outline-light btn-hero">
                             <i class="fas fa-info-circle me-2"></i>Pelajari Lebih Lanjut
@@ -125,26 +125,20 @@
     <!-- Stats Section -->
     <section class="stats-section">
         <div class="container">
-            <div class="row">
-                <div class="col-md-3 col-6 mb-4 mb-md-0">
+            <div class="row justify-content-center">
+                <div class="col-md-4 col-6 mb-4 mb-md-0">
                     <div class="stat-item">
                         <div class="stat-number">5000+</div>
                         <div class="stat-label">Koleksi Buku</div>
                     </div>
                 </div>
-                <div class="col-md-3 col-6 mb-4 mb-md-0">
+                <div class="col-md-4 col-6 mb-4 mb-md-0">
                     <div class="stat-item">
                         <div class="stat-number">2000+</div>
                         <div class="stat-label">Member Aktif</div>
                     </div>
                 </div>
-                <div class="col-md-3 col-6">
-                    <div class="stat-item">
-                        <div class="stat-number">50+</div>
-                        <div class="stat-label">Kategori Buku</div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-6">
+                <div class="col-md-4 col-6">
                     <div class="stat-item">
                         <div class="stat-number">24/7</div>
                         <div class="stat-label">Layanan Online</div>
