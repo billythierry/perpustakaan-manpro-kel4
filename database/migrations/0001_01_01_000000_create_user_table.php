@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('password_hash', 255);
             
             // Menggantikan ENUM('admin', 'anggota')
-            $table->enum('role', ['admin', 'anggota']);  
+            $table->enum('role', ['admin', 'anggota'])->default('anggota');  
         });
     }
 
