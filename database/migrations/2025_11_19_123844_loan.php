@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('loan', function (Blueprint $table) {
+        Schema::create('loans', function (Blueprint $table) {
             $table->id('loan_id'); // Sama dengan int not null primary key auto_increment
 
-            // Foreign Key member_id
-            $table->unsignedBigInteger('member_id');
-            $table->foreign('member_id')
-                  ->references('member_id')
-                  ->on('member')
+            // Foreign Key user_id
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')
+                  ->references('user_id')
+                  ->on('users')
                   ->onUpdate('cascade')
                   ->onDelete('restrict');
 
@@ -26,7 +26,7 @@ return new class extends Migration
             $table->unsignedBigInteger('book_id');
             $table->foreign('book_id')
                   ->references('book_id')
-                  ->on('book')
+                  ->on('books')
                   ->onUpdate('cascade')
                   ->onDelete('restrict');
 
@@ -47,6 +47,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('loan');
+        Schema::dropIfExists('loans');
     }
 };

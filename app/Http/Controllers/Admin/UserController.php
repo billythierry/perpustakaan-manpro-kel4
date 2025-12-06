@@ -14,66 +14,57 @@ class UserController extends Controller
         return view('admin.user', compact('user'));
     }
 
-    //Create User
+    // Create User
     public function store(Request $request)
     {
         $request->validate([
-            'username' => 'required|string|unique:user,username|max:100',
-            'email' => 'required|email|max:255',
+            'username' => 'required|string|unique:users,username|max:100',
+            'email' => 'required|email|max:255|unique:users,email',
             'address' => 'required|string|max:255',
-            'password_hash' => 'required|string|max:255',
+            'password' => 'required|string|min:6',
             'role' => 'required|in:admin,anggota'
         ]);
 
-        User::create([
+        $user = User::create([
             'username' => $request->username,
-            'password_hash' => $request->password_hash,
+            'email' => $request->email,
+            'address' => $request->address,
+            'password_hash' => $request->password, // Laravel auto-hash via cast
             'role' => $request->role
         ]);
 
-        return redirect()->route('admin.user.index')->with('success', 'User created successfully');
+        return response()->json(['success' => true, 'user' => $user]);
     }
 
-    //Update User
+    // Get User by ID (Edit)
+    public function show($id)
+    {
+        $user = User::where('user_id', $id)->firstOrFail();
+        return response()->json($user);
+    }
+
+    // Update User (HANYA ROLE)
     public function update(Request $request, $id)
     {
-        $user = User::findOrFail($id);
+        $user = User::where('user_id', $id)->firstOrFail();
 
-        // Validasi menggunakan 'sometimes'
-        // Artinya: Jika input dikirim, validasi aturannya. Jika tidak dikirim, abaikan.
         $validatedData = $request->validate([
-            'username' => [
-                'sometimes', 
-                'string', 
-                'max:100',
-                // Cek unik ke tabel 'user' kolom 'username', tapi abaikan ID user ini sendiri
-                Rule::unique('user', 'username')->ignore($user->user_id, 'user_id') 
-            ],
-            'email' => 'sometimes|email|max:255',
-            'address' => 'sometimes|string|max:255',
-            'password_hash' => 'sometimes|string|max:255',
-            'role'          => 'sometimes|in:admin,anggota'
+            'role' => 'required|in:admin,anggota'
         ]);
 
-        // Logika Password:
-        // Hapus password_hash dari array data jika user tidak mengirim password baru (atau kosong)
-        if (!$request->filled('password_hash')) {
-            unset($validatedData['password_hash']);
-        }
+        $user->update([
+            'role' => $validatedData['role']
+        ]);
 
-        // Update hanya field yang ada di $validatedData
-        // Jika field tidak dikirim di form, nilai lama di database tidak akan berubah.
-        $user->update($validatedData);
-
-        return redirect()->route('admin.user.index')->with('success', 'User updated successfully');
+        return response()->json(['success' => true]);
     }
 
-    //Delete User
+    // Delete User
     public function destroy($id)
     {
-        $user = User::findOrFail($id);
+        $user = User::where('user_id', $id)->firstOrFail();
         $user->delete();
 
-        return redirect()->route('admin.user.index')->with('success', 'User deleted successfully');
+        return response()->json(['success' => true]);
     }
 }

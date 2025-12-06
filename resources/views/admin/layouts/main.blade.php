@@ -42,6 +42,7 @@
         <h4 class="text-center">Admin Panel</h4>
         <a href="{{ route('admin.dashboard') }}">Welcome</a>
         <a href="{{ route('admin.book.index') }}">Buku</a>
+        <a href="{{ route('admin.user.index') }}">User</a>
         <a>Peminjaman</a>
         <a href="{{ route('logout') }}" 
         onclick="event.preventDefault(); 

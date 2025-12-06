@@ -9,13 +9,13 @@ class Loan extends Model
 {
     use HasFactory;
 
-    protected $table = 'loan';
+    protected $table = 'loans';
     protected $primaryKey = 'loan_id';
     public $timestamp = false;
 
     protected $fillable = [
         //'loan_id',
-        'member_id',
+        'user_id',
         'book_id',
         'borrow_date',
         'due_date',
@@ -25,9 +25,9 @@ class Loan extends Model
     ];
 
     //Relations
-    public function member()
+    public function user()
     {
-        return $this->belongsTo(Member::class, 'member_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function book()
