@@ -442,7 +442,7 @@
     <!-- Sidebar -->
     <nav class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            <h4>📚 Literasi Kita</h4>
+            <h4>Literasi Kita</h4>
             <p>Admin Panel</p>
         </div>
         

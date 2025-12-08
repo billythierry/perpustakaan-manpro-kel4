@@ -253,7 +253,7 @@
 </style>
 
 <div class="page-header">
-    <h2>📚 Manajemen Buku</h2>
+    <h2>Manajemen Buku</h2>
     <button id="btnAdd" class="btn btn-primary">
         <i class="bi bi-plus-circle me-2"></i>Tambah Buku
     </button>

@@ -398,7 +398,7 @@
 
     <!-- Footer -->
     <footer class="main-footer">
-        <p>&copy; 2024 LibraryApp. All rights reserved.</p>
+        <p>&copy; 2025 LiterasiKita. All rights reserved.</p>
     </footer>
 
     <!-- Bootstrap JS -->

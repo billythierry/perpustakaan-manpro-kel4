@@ -336,7 +336,7 @@
 </style>
 
 <div class="page-header">
-    <h1>📚 Koleksi Buku</h1>
+    <h1>Koleksi Buku</h1>
     <p>Temukan buku favoritmu dan mulai membaca</p>
 </div>
 

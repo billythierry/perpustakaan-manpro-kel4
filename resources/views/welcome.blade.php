@@ -253,7 +253,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6 text-md-start mb-3 mb-md-0">
-                    <p class="mb-0">&copy; 2024 Literasi Kita. All rights reserved.</p>
+                    <p class="mb-0">&copy; 2025 Literasi Kita. All rights reserved.</p>
                 </div>
                 <div class="col-md-6 text-md-end">
                     <a href="#" class="text-white text-decoration-none me-3">
