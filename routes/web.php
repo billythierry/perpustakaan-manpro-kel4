@@ -1,13 +1,15 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Models\App\Models\User;
+use App\Models\User;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\BookController;
 use App\Http\Controllers\Member\DashboardController as MemberDashboardController;
+use App\Http\Controllers\Member\BookMemberController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -24,6 +26,8 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::prefix('Anggota')->middleware(['auth', 'membercheck'])->group(function()
 {
     Route::get('dashboard', [MemberDashboardController::class, 'index'])->name('member.dashboard');
+    Route::get('book', [BookMemberController::class, 'index'])->name('member.book.index');
+    Route::get('book/{id}', [BookMemberController::class, 'show'])->name('member.book.show');
 });
 
 //Admin
