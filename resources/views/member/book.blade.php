@@ -116,6 +116,7 @@
         color: #1e293b;
         margin-bottom: 8px;
         display: -webkit-box;
+        line-clamp: 2;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
         overflow: hidden;
@@ -368,7 +369,7 @@
 @if(isset($books) && count($books) > 0)
     <div class="books-grid">
         @foreach($books as $book)
-        <div class="book-card" onclick="showBookDetail({{ $book->book_id }})">
+        <div class="book-card" onclick="showBookDetail('{{ $book->book_id }}')">
             @if($book->image)
                 <img src="{{ asset($book->image) }}" alt="{{ $book->title }}" class="book-image">
             @else
@@ -461,12 +462,20 @@ function showBookDetail(bookId) {
                         </div>
                         <hr>
                         ${data.stock > 0 
-                            ? `<button class="btn btn-primary w-100" onclick="borrowBook(${data.book_id})">
-                                <i class="bi bi-arrow-right-circle me-2"></i>Ajukan Peminjaman
-                               </button>`
-                            : `<button class="btn btn-secondary w-100" disabled>
-                                <i class="bi bi-x-circle me-2"></i>Stok Habis
-                               </button>`
+                            ? `
+                            <form action="/Anggota/loan/store" method="POST">
+                                @csrf
+                                <input type="hidden" name="book_id" value="${data.book_id}">
+                                <button class="btn btn-primary w-100">
+                                    <i class="bi bi-arrow-right-circle me-2"></i>Ajukan Peminjaman
+                                </button>
+                            </form>
+                            `
+                            : `
+                            <button class="btn btn-secondary w-100" disabled>
+                                    <i class="bi bi-x-circle me-2"></i>Stok Habis
+                            </button>
+                            `
                         }
                     </div>
                 </div>
@@ -485,7 +494,7 @@ function showBookDetail(bookId) {
 // function borrowBook(bookId) {
 //     if (!confirm('Apakah Anda yakin ingin meminjam buku ini?')) return;
     
-//     fetch(`/Anggota/peminjaman/borrow/${bookId}`, {
+//     fetch(`/Anggota/loan/borrow/${bookId}`, {
 //         method: 'POST',
 //         headers: {
 //             'Content-Type': 'application/json',

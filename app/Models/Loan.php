@@ -11,7 +11,7 @@ class Loan extends Model
 
     protected $table = 'loans';
     protected $primaryKey = 'loan_id';
-    public $timestamp = false;
+    public $timestamps = false;
 
     protected $fillable = [
         //'loan_id',

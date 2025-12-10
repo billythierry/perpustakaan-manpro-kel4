@@ -459,7 +459,7 @@
                 <i class="bi bi-people"></i>
                 <span>Manajemen User</span>
             </a>
-            <a href="#">
+            <a href="{{ route('admin.loan.index') }}" class="{{ request()->routeIs('admin.loan.*') ? 'active' : '' }}">
                 <i class="bi bi-arrow-repeat"></i>
                 <span>Peminjaman</span>
             </a>

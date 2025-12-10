@@ -361,7 +361,7 @@
                 <li><a href="{{ route('member.book.index') }}" class="{{ request()->routeIs('member.book.*') ? 'active' : '' }}">
                     <i class="bi bi-book"></i> Daftar Buku
                 </a></li>
-                <li><a href="#">
+                <li><a href="{{ route('member.loan.index') }}" class="{{ request()->routeIs('member.loan') ? 'active' : '' }}">
                     <i class="bi bi-arrow-repeat"></i> Peminjaman Saya
                 </a></li>
                 <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
