@@ -344,7 +344,7 @@
         </div>
         <div class="stat-info">
             <div class="stat-label">Total Buku</div>
-            <div class="stat-value">0</div>
+            <div class="stat-value">{{ $totalBooks ?? 0 }}</div>
         </div>
     </div>
 
@@ -354,7 +354,7 @@
         </div>
         <div class="stat-info">
             <div class="stat-label">Total User</div>
-            <div class="stat-value">0</div>
+            <div class="stat-value">{{ $totalUsers ?? 0 }}</div>
         </div>
     </div>
 
@@ -364,7 +364,7 @@
         </div>
         <div class="stat-info">
             <div class="stat-label">Peminjaman Aktif</div>
-            <div class="stat-value">0</div>
+            <div class="stat-value">{{ $activeBorrowings ?? 0 }}</div>
         </div>
     </div>
 
@@ -374,7 +374,7 @@
         </div>
         <div class="stat-info">
             <div class="stat-label">Buku Tersedia</div>
-            <div class="stat-value">0</div>
+            <div class="stat-value">{{ $availableBooks ?? 0 }}</div>
         </div>
     </div>
 </div>
