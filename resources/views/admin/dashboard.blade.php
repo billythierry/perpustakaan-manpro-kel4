@@ -390,7 +390,7 @@
             <i class="bi bi-people"></i>
             <span>Kelola User</span>
         </a>
-        <a href="#" class="action-btn">
+        <a href="{{ route('admin.loan.index') }}" class="action-btn">
             <i class="bi bi-arrow-repeat"></i>
             <span>Peminjaman</span>
         </a>
