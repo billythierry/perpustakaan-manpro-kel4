@@ -441,7 +441,7 @@
             <p class="action-desc">Jelajahi koleksi buku yang tersedia</p>
         </a>
 
-        <a href="#" class="action-card secondary">
+        <a href="{{ route('member.loan.index') }}" class="action-card secondary">
             <div class="action-icon">
                 <i class="bi bi-clock-history"></i>
             </div>
