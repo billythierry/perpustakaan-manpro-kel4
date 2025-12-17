@@ -262,28 +262,28 @@
                     {{-- USERNAME --}}
                     <div class="mb-3">
                         <label class="form-label">Username</label>
-                        <input type="text" class="form-control editable" id="username" name="username">
+                        <input type="text" class="form-control editable" id="username" name="username" required>
                         <div class="text-danger small" id="error-username"></div>
                     </div>
 
                     {{-- EMAIL --}}
                     <div class="mb-3">
                         <label class="form-label">Email</label>
-                        <input type="email" class="form-control editable" id="email" name="email">
+                        <input type="email" class="form-control editable" id="email" name="email" required>
                         <div class="text-danger small" id="error-email"></div>
                     </div>
 
                     {{-- ADDRESS --}}
                     <div class="mb-3">
                         <label class="form-label">Alamat</label>
-                        <input type="text" class="form-control editable" id="address" name="address">
+                        <input type="text" class="form-control editable" id="address" name="address" required>
                         <div class="text-danger small" id="error-address"></div>
                     </div>
 
                     {{-- PASSWORD (HANYA SAAT TAMBAH) --}}
                     <div class="mb-3 addOnly">
                         <label class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password" name="password">
+                        <input type="password" class="form-control" id="password" name="password" required>
                         <div class="text-danger small" id="error-password"></div>
                     </div>
 
