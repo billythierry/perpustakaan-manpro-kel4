@@ -53,15 +53,12 @@ class LoanController extends Controller
         $loan = Loan::where('user_id', Auth::id())->findOrFail($id);
 
         $loan->return_date = now();
+        $loan->status = 'pengembalian_diajukan';
 
         if (now()->gt($loan->due_date)) {
             $loan->fine_amount = 20000;       
         }
 
-        $loan->book->stock += 1;
-        $loan->book->save();
-
-        $loan->status = 'dikembalikan';
         $loan->save();
 
         return redirect()->back()->with('success', 'Buku berhasil dikembalikan!');

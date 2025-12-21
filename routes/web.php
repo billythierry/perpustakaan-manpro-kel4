@@ -44,5 +44,7 @@ Route::prefix('admin')->middleware(['auth', 'admincheck'])->group(function()
     Route::get('loan', [AdminLoanController::class, 'index'])->name('admin.loan.index');
     Route::post('loan/{id}/approve', [AdminLoanController::class, 'approve'])->name('admin.loan.approve');
     Route::post('loan/{id}/reject', [AdminLoanController::class, 'reject'])->name('admin.loan.reject');
+    Route::post('loan/{id}/accept-return', [AdminLoanController::class, 'acceptReturn'])->name('admin.loan.return.accept');
+    Route::post('loan/report/pdf', [AdminLoanController::class, 'exportPdf'])->name('admin.loan.report.pdf');
 });
 
